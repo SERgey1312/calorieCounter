@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "833809809737",
+    "firebase_url": "https://caloriecounter-e1561-default-rtdb.firebaseio.com",
+    "project_id": "caloriecounter-e1561",
+    "storage_bucket": "caloriecounter-e1561.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833809809737:android:dc1ca1d5f4f49d8e861a98",
+        "android_client_info": {
+          "package_name": "serega.apps.caloriecounter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "833809809737-np54kqqnrt4bjvnq33tl7crvhjg15hq1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaBixn9sw_gnPbfPAlOsigYvdHheOJqFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "833809809737-np54kqqnrt4bjvnq33tl7crvhjg15hq1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
