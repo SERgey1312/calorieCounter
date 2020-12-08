@@ -16,7 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="5dp">
 
         <TextView
             android:id="@+id/greeting"
@@ -51,15 +52,23 @@
             android:id="@+id/height"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Введите свой рост"
+            android:hint="Введите свой рост, см"
             android:layout_marginBottom="6dp"/>
         <EditText
             android:id="@+id/weight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Введите свой вес"
+            android:hint="Введите свой вес, кг"
             android:layout_marginBottom="6dp"
             />
+        <TextView
+            android:id="@+id/tittle_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:layout_marginBottom="5dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,6 +81,25 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:entries="@array/workouts"
+            android:backgroundTint="#10A211"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            android:spinnerMode="dropdown"
+            android:layout_marginBottom="10dp"
+            style="@style/Widget.AppCompat.DropDownItem.Spinner"
+            android:popupBackground="#9E9E9E"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Желаемый результат:"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:layout_marginBottom="5dp"/>
+        <Spinner
+            android:id="@+id/winshSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/winsh"
             android:backgroundTint="#10A211"
             android:theme="@style/ThemeOverlay.AppCompat.Light"
             android:spinnerMode="dropdown"

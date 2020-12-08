@@ -7,4 +7,9 @@
         <item>Ежедневные тренировки (1 раз в день)</item>
         <item>Ежедневные тренировки (2 раза в день)</item>
     </string-array>
+    <string-array name="winsh">
+        <item>Снижать вес</item>
+        <item>Поддерживать вес</item>
+        <item>Набирать вес</item>
+    </string-array>
 </resources>

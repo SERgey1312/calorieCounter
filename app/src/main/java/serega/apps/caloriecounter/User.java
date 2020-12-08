@@ -11,17 +11,19 @@ public class User implements Parcelable {
     private String height;
     private String sex;
     private String activity_level;
+    private String winsh;
     private String weight_index;
 
     public User(){}
 
-    public User(String name, String age, String weight, String height, String sex, String activity_level, String weight_index) {
+    public User(String name, String age, String weight, String height, String sex, String activity_level, String winsh, String weight_index) {
         this.name = name;
         this.age = age;
         this.weight = weight;
         this.height = height;
         this.sex = sex;
         this.activity_level = activity_level;
+        this.winsh = winsh;
         this.weight_index = weight_index;
     }
 
@@ -33,6 +35,7 @@ public class User implements Parcelable {
         height = in.readString();
         sex = in.readString();
         activity_level = in.readString();
+        winsh = in.readString();
         weight_index = in.readString();
     }
 
@@ -112,6 +115,14 @@ public class User implements Parcelable {
         this.weight_index = weight_index;
     }
 
+    public String getWinsh() {
+        return winsh;
+    }
+
+    public void setWinsh(String winsh) {
+        this.winsh = winsh;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -126,6 +137,7 @@ public class User implements Parcelable {
         parcel.writeString(height);
         parcel.writeString(sex);
         parcel.writeString(activity_level);
+        parcel.writeString(winsh);
         parcel.writeString(weight_index);
     }
 }

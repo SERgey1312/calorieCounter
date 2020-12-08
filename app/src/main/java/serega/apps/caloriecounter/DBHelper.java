@@ -14,7 +14,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private SQLiteDatabase db;
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 4 ;
     public static final String DATABASE_NAME = "calorie_counter";
     public static final String USER_TABLE = "user_info";
 
@@ -27,6 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String USER_ACTIVITY_LEVEL = "activity_level";
     public static final String USER_W_INDEX = "w_index";
     public static final String USER_SEX = "sex";
+    public static final String USER_WINSH = "winsh";
 
 
     public DBHelper(@Nullable Context context) {
@@ -44,6 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 USER_HEIGHT + " TEXT, " +
                 USER_WEIGHT + " TEXT, " +
                 USER_ACTIVITY_LEVEL + " TEXT, " +
+                USER_WINSH + " TEXT, " +
                 USER_W_INDEX + " TEXT, " +
                 USER_SEX  + " TEXT" + ")";
         db.execSQL(USER_STR);
@@ -65,6 +67,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(USER_HEIGHT, user.getHeight());
         cv.put(USER_WEIGHT, user.getWeight());
         cv.put(USER_ACTIVITY_LEVEL, user.getActivity_level());
+        cv.put(USER_WINSH, user.getWinsh());
         cv.put(USER_SEX, user.getSex());
         cv.put(USER_W_INDEX, w_index);
         db.insert(USER_TABLE, null, cv);
@@ -100,6 +103,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 user.setHeight(cursor.getString(cursor.getColumnIndex(USER_HEIGHT)));
                 user.setSex(cursor.getString(cursor.getColumnIndex(USER_SEX)));
                 user.setActivity_level(cursor.getString(cursor.getColumnIndex(USER_ACTIVITY_LEVEL)));
+                user.setWinsh(cursor.getString(cursor.getColumnIndex(USER_WINSH)));
                 users.add(user);
             } while (cursor.moveToNext());
         }

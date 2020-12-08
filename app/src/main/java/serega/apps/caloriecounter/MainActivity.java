@@ -3,6 +3,7 @@ package serega.apps.caloriecounter;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,12 +16,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Spinner spinnerWorkout;
+    Spinner spinnerWinsh;
     RadioButton man;
     RadioButton woman;
     ImageView motivationImg;
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText height;
     EditText weight;
     Button furtherBtn;
+    TextView editTextErrorView;
 
     DBHelper dbHelper;
     ArrayList<User> users;
@@ -39,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String user_weight;
     String user_sex;
     String user_activity;
+    String user_winsh;
 
 
     @Override
@@ -60,10 +66,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         spinnerWorkout = findViewById(R.id.workoutsSpinner);
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.workouts, android.R.layout.simple_spinner_dropdown_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerWorkout.setAdapter(adapter);
+        ArrayAdapter adapterWorkout = ArrayAdapter.createFromResource(this, R.array.workouts, android.R.layout.simple_spinner_dropdown_item);
+        adapterWorkout.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerWorkout.setAdapter(adapterWorkout);
+        spinnerWinsh = findViewById(R.id.winshSpinner);
+        ArrayAdapter adapterWinsh = ArrayAdapter.createFromResource(this, R.array.winsh, android.R.layout.simple_spinner_dropdown_item);
+        adapterWinsh.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerWinsh.setAdapter(adapterWinsh);
 
+        editTextErrorView = findViewById(R.id.tittle_error);
         man = findViewById(R.id.man);
         woman = findViewById(R.id.woman);
         name = findViewById(R.id.name);
@@ -119,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         user_height = height.getText().toString();
         user_weight = weight.getText().toString();
         user_activity = spinnerWorkout.getSelectedItem().toString();
+        user_winsh = spinnerWinsh.getSelectedItem().toString();
         if (man.isChecked()){
             user_sex = "male";
         } else if(woman.isChecked()){
@@ -130,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         user.setWeight(user_weight);
         user.setSex(user_sex);
         user.setActivity_level(user_activity);
+        user.setWinsh(user_winsh);
     }
     //взятие данных с полей ввода и компоновка их в объект | end
 
@@ -157,8 +170,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public boolean checkWeightField(EditText editText){
         int value = editText.getText().toString().length();
+
         return value > 1 && value < 4;
     }
+
 
     private final TextWatcher textWatcher = new TextWatcher() {
         @Override
@@ -174,10 +189,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String tittle_str;
             if(checkNameField(name) && checkAgeField(age) && checkHeightField(height) && checkWeightField(weight)){
                 tittle_str = "Данные корректны";
+                editTextErrorView.setTextColor(Color.parseColor("#10A211"));
+                editTextErrorView.setText(tittle_str);
                 furtherBtn.setEnabled(true);
                 furtherBtn.setAlpha(1);
             } else {
-                tittle_str = "Данные введены неверно";
+                tittle_str = "Введите все данные верно";
+                editTextErrorView.setTextColor(Color.parseColor("#ff0000"));
+                editTextErrorView.setText(tittle_str);
                 furtherBtn.setEnabled(false);
                 furtherBtn.setAlpha((float) 0.4);
             }
