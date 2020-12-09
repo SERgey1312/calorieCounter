@@ -24,19 +24,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="5dp"
             android:text="Измените данные о себе:"
             android:textAlignment="center"
             android:textColor="#10A211"
             android:textSize="25dp" />
 
         <TextView
+            android:id="@+id/tittleName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="7dp"
+            android:text="Имя:"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:hint="Введите имя" />
+        <TextView
             android:id="@+id/tittleAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="7dp"
             android:text="Возраст:"
             android:textSize="20dp" />
 
@@ -52,8 +68,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="7dp"
             android:text="Рост:"
             android:textSize="20dp" />
 
@@ -69,8 +85,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="7dp"
             android:text="Вес:"
             android:textSize="20dp" />
 
@@ -96,7 +112,7 @@
             android:layout_marginBottom="5dp"
             android:text="Уровень нагрузки:"
             android:textAlignment="center"
-            android:textSize="20dp" />
+            android:textSize="15dp" />
 
         <Spinner
             android:id="@+id/workoutsSpinner"
@@ -131,16 +147,16 @@
             android:spinnerMode="dropdown"
             android:theme="@style/ThemeOverlay.AppCompat.Light"
             />
+
         <Button
             android:id="@+id/change_user_data"
             android:layout_width="110dp"
-            android:layout_height="60dp"
-            android:text="сохранить"
-            android:theme="@style/Widget.AppCompat.Button.Colored"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="#10A211"
             android:layout_marginTop="10dp"
-            />
+            android:background="#10A211"
+            android:text="сохранить"
+            android:theme="@style/Widget.AppCompat.Button.Colored" />
     </LinearLayout>
 
 </RelativeLayout>

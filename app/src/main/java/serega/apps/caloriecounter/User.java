@@ -140,4 +140,5 @@ public class User implements Parcelable {
         parcel.writeString(winsh);
         parcel.writeString(weight_index);
     }
+
 }

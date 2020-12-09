@@ -170,7 +170,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public boolean checkWeightField(EditText editText){
         int value = editText.getText().toString().length();
-
         return value > 1 && value < 4;
     }
 

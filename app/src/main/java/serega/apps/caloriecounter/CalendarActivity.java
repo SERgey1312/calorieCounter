@@ -1,15 +1,25 @@
 package serega.apps.caloriecounter;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class CalendarActivity extends AppCompatActivity {
 
@@ -21,8 +31,13 @@ public class CalendarActivity extends AppCompatActivity {
     TextView currentHeightView;
     TextView currentCalloriesView;
     Button changeDataBtn;
+    CalendarView calendar;
+    Button openDay;
+
+    String selectedDate;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,14 +51,20 @@ public class CalendarActivity extends AppCompatActivity {
         currentHeightView = findViewById(R.id.current_height);
         currentCalloriesView = findViewById(R.id.current_callories);
         changeDataBtn = findViewById(R.id.change_user_data);
+        openDay = findViewById(R.id.openDay);
 
         dbHelper = new DBHelper(this);
         user = dbHelper.getUserInfo().get(0);
-        nameAndAgeVeiw.setText(user.getName() + ", " + user.getAge());
 
+        calendar = findViewById(R.id.calendarView);
+        calendar.setMaxDate( System.currentTimeMillis());
+
+
+        String currentTExtInNameVieW = nameAndAgeVeiw.getText().toString() + user.getName() + "!";
         String currentTextInWeightView = currentWeightView.getText().toString() + " " + user.getWeight() + " кг";
         String currentTextInHeightView = currentHeightView.getText().toString() + " " + user.getHeight() + " см";
         String currentTextInCalloriesView = currentCalloriesView.getText().toString() + " " + getNormOfCalories(user) + " ккал";
+        nameAndAgeVeiw.setText(currentTExtInNameVieW);
         currentWeightView.setText(currentTextInWeightView);
         currentHeightView.setText(currentTextInHeightView);
         currentCalloriesView.setText(currentTextInCalloriesView);
@@ -54,8 +75,32 @@ public class CalendarActivity extends AppCompatActivity {
                 goToChangeDataActivity();
             }
         };
-
         changeDataBtn.setOnClickListener(btnChangeListener);
+
+        View.OnClickListener bntOpenDayListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToDayDietActivity();
+            }
+        };
+        openDay.setOnClickListener(bntOpenDayListener);
+
+        // слушатель для переключения даты в календаре | start
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
+                Month month1 = Month.of(month + 1);
+                selectedDate = day + " " + month1 + " " + year;
+            }
+        });
+        LocalDate currentDate = LocalDate.now();
+        int currentDay = currentDate.getDayOfMonth();
+        int currentYear= currentDate.getYear();
+        Month currentMonth = currentDate.getMonth();
+        selectedDate = currentDay + " " + currentMonth + " " + currentYear;
+
+
+        // слушатель для переключения даты в календаре | end
     }
 
 
@@ -113,4 +158,16 @@ public class CalendarActivity extends AppCompatActivity {
         finish();
     }
     //функция перехода в активити изменения данных | end
+
+    //функция перехода в активити изменения данных | start
+    public void goToDayDietActivity(){
+        Intent intent = new Intent(CalendarActivity.this, DietActivity.class);
+        intent.putExtra("date", selectedDate);
+        intent.putExtra("calorie_norm", getNormOfCalories(user));
+        startActivity(intent);
+        finish();
+    }
+    //функция перехода в активити изменения данных | end
+
+
 }
