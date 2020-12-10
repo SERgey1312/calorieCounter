@@ -97,13 +97,6 @@ public class ProductPageActivity  extends AppCompatActivity {
                 food.setFats(fats);
                 food.setCarbo(carbo);
                 food.setWeight(weight);
-                System.out.println(food.getName());
-                System.out.println(food.getDate_str());
-                System.out.println(food.getCalorie_per_hundred());
-                System.out.println(food.getProteins());
-                System.out.println(food.getFats());
-                System.out.println(food.getCarbo());
-                System.out.println(food.getWeight());
                 dbHelper.insertFood(food);
                 onBackPressed();
             }

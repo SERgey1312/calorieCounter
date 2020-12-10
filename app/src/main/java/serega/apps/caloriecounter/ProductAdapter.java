@@ -7,19 +7,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import androidx.annotation.NonNull;
 
-public class ProductAdapter extends ArrayAdapter<Product> {
+import java.util.ArrayList;
+import java.util.Collection;
+
+public class ProductAdapter extends ArrayAdapter<Product> implements Filterable {
     private LayoutInflater inflater;
     private int layout;
-    private ArrayList<Product> productList;
+    private ArrayList<Product> tempProductList;
+    private ArrayList<Product> originalArray;
+    private ArrayList<Product> finalOriginArr;
+    CustomFilter cs;
 
 
     ProductAdapter(Context context, int resource, ArrayList<Product> products) {
         super(context, resource, products);
-        this.productList = products;
+        this.tempProductList = products;
+        this.originalArray = products;
+        this.finalOriginArr = products;
         this.layout = resource;
         this.inflater = LayoutInflater.from(context);
 
@@ -35,7 +45,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         else{
             viewHolder = (ProductAdapter.ViewHolder) convertView.getTag();
         }
-        final Product product = productList.get(position);
+        final Product product = tempProductList.get(position);
 
         viewHolder.nameView.setText(product.getName());
         viewHolder.caloriePerHundredView.setText(product.getCalories_per_hundred() + " ккал. / 100 г.");
@@ -57,4 +67,49 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         }
     }
 
+    @NonNull
+    @Override
+    public Filter getFilter() {
+        if (cs == null){
+            cs = new CustomFilter();
+        }
+        return cs;
+    }
+
+    class CustomFilter extends Filter {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            FilterResults results = new FilterResults();
+
+            if (charSequence.length() > 0) {
+                ArrayList<Product> filteredProducts = new ArrayList<>();
+                charSequence = charSequence.toString().toUpperCase();
+                for (int i = 0; i < tempProductList.size(); i++){
+                    if(tempProductList.get(i).getName().toUpperCase().contains(charSequence)){
+                        Product product = new Product(tempProductList.get(i).getName(),
+                                tempProductList.get(i).getCalories_per_hundred(),
+                                tempProductList.get(i).getProteins(),
+                                tempProductList.get(i).getFats(),
+                                tempProductList.get(i).getCarbo());
+                        filteredProducts.add(product);
+                    }
+                }
+                results.count = filteredProducts.size();
+                results.values = filteredProducts;
+            } else {
+                results.count = tempProductList.size();
+                results.values = tempProductList;
+            }
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                originalArray.clear();
+                originalArray.addAll((Collection<? extends Product>) filterResults.values);
+                notifyDataSetChanged();
+        }
+    }
 }

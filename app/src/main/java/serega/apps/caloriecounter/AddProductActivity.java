@@ -1,14 +1,18 @@
 package serega.apps.caloriecounter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,18 +23,24 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class AddProductActivity  extends AppCompatActivity {
 
+    Context context = this;
     String calorie_norm;
     String currentDate;
+    EditText editTextView;
+    String textInEditText = "";
 
     ListView productList;
     FirebaseDatabase database;
     DatabaseReference myRef;
+    Query query;
+    ProductAdapter adapter;
 
     ArrayList<Product> products = new ArrayList<>();
 
@@ -43,17 +53,19 @@ public class AddProductActivity  extends AppCompatActivity {
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        editTextView = findViewById(R.id.editTextView);
         currentDate =  getIntent().getExtras().getString("date");
         calorie_norm = getIntent().getExtras().getString("calorie_norm");
 
         productList = findViewById(R.id.productList);
+        productList.setTextFilterEnabled(true);
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("products");
-
-        ProductAdapter adapter = new ProductAdapter(this, R.layout.list_products_from_fb, products);
+        query = FirebaseDatabase.getInstance().getReference("products").orderByChild("name");
+        adapter = new ProductAdapter(this, R.layout.list_products_from_fb, products);
         productList.setAdapter(adapter);
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()){
@@ -71,6 +83,7 @@ public class AddProductActivity  extends AppCompatActivity {
                     product.setProteins(proteins);
                     product.setName(name);
                     products.add(product);
+
                 }
                 adapter.notifyDataSetChanged();
 
@@ -98,6 +111,8 @@ public class AddProductActivity  extends AppCompatActivity {
             }
         });
 
+
+        editTextView.addTextChangedListener(textWatcher);
     }
 
     //system btn back
@@ -110,5 +125,41 @@ public class AddProductActivity  extends AppCompatActivity {
         finish();
     }
     //system btn back (end)
+
+    //проверка введено ли поле |start
+    public boolean checkField(EditText editText){
+        int value = editText.getText().toString().length();
+        return value > 0;
+    }
+
+
+    private final TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            textInEditText = editTextView.getText().toString();
+            adapter.getFilter().filter(charSequence);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+    //проверка введено ли поле | end
+
+    public boolean filterByName(String textInEditText, Product product){
+        if (textInEditText.equals("") || product.getName().startsWith(textInEditText)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
 }
