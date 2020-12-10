@@ -112,6 +112,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void insertFood(Food food) {
+        db = getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(FOOD_DATE, food.getDate_str());
         cv.put(FOOD_NAME, food.getName());

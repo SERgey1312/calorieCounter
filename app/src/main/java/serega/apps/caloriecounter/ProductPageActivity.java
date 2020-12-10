@@ -35,6 +35,7 @@ public class ProductPageActivity  extends AppCompatActivity {
     String proteins;
     String fats;
     String carbo;
+    String weight;
 
     TextView caloriePerHundredView;
     TextView proteinsView;
@@ -43,6 +44,9 @@ public class ProductPageActivity  extends AppCompatActivity {
     TextView productNameView;
     EditText editTextView;
     Button saveFood;
+
+    DBHelper dbHelper = new DBHelper(this);
+    Food food;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -53,6 +57,7 @@ public class ProductPageActivity  extends AppCompatActivity {
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        food = new Food();
         currentDate =  getIntent().getExtras().getString("date");
         calorie_norm = getIntent().getExtras().getString("calorie_norm");
         product_name = getIntent().getExtras().getString("product_name");
@@ -60,7 +65,6 @@ public class ProductPageActivity  extends AppCompatActivity {
         proteins = getIntent().getExtras().getString("proteins");
         fats = getIntent().getExtras().getString("fats");
         carbo = getIntent().getExtras().getString("carbo");
-
 
         caloriePerHundredView = findViewById(R.id.caloriePerHundred);
         proteinsView = findViewById(R.id.proteins);
@@ -81,7 +85,32 @@ public class ProductPageActivity  extends AppCompatActivity {
         carboView.setText(strCarboView);
         productNameView.setText(product_name);
 
+
+
         editTextView.addTextChangedListener(textWatcher);
+        saveFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                weight = editTextView.getText().toString();
+                food.setDate_str(currentDate);
+                food.setName(product_name);
+                food.setCalorie_per_hundred(product_calorie_per_hundred);
+                food.setProteins(proteins);
+                food.setFats(fats);
+                food.setCarbo(carbo);
+                food.setWeight(weight);
+                System.out.println(food.getName());
+                System.out.println(food.getDate_str());
+                System.out.println(food.getCalorie_per_hundred());
+                System.out.println(food.getProteins());
+                System.out.println(food.getFats());
+                System.out.println(food.getCarbo());
+                System.out.println(food.getWeight());
+                dbHelper.insertFood(food);
+                onBackPressed();
+            }
+        });
+
 
     }
 
