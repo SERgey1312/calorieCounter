@@ -85,8 +85,6 @@ public class ProductPageActivity  extends AppCompatActivity {
         carboView.setText(strCarboView);
         productNameView.setText(product_name);
 
-
-
         editTextView.addTextChangedListener(textWatcher);
         saveFood.setOnClickListener(new View.OnClickListener() {
             @Override

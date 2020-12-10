@@ -16,7 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,7 +34,7 @@ public class DietActivity extends AppCompatActivity {
     ListView productList;
     Button addProductBtn;
 
-    String currentDate;
+    String currentSelectedDate;
     String calorie_norm;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -46,17 +48,17 @@ public class DietActivity extends AppCompatActivity {
 
         dbHelper = new DBHelper(this);
 
-        currentDate =  getIntent().getExtras().getString("date");
+        currentSelectedDate =  getIntent().getExtras().getString("date");
         calorie_norm = getIntent().getExtras().getString("calorie_norm");
 
         dateTittle = findViewById(R.id.selectedDate);
-        dateTittle.setText(currentDate);
+        dateTittle.setText(currentSelectedDate);
         calories = findViewById(R.id.calories);
         addProductBtn = findViewById(R.id.addProductBtn);
 
-        products = dbHelper.getFoodByDate(currentDate);
+        products = dbHelper.getFoodByDate(currentSelectedDate);
         productList = findViewById(R.id.productList);
-        FoodAdapter adapter = new FoodAdapter(this, R.layout.list_products, products, dbHelper, currentDate, calorie_norm);
+        FoodAdapter adapter = new FoodAdapter(this, R.layout.list_products, products, dbHelper, currentSelectedDate, calorie_norm);
         productList.setAdapter(adapter);
 
         String caloriesTittle = calories.getText().toString() + getCalorieProgress(products) + " / " + calorie_norm + " ккал.";
@@ -69,6 +71,12 @@ public class DietActivity extends AppCompatActivity {
             }
         };
         addProductBtn.setOnClickListener(addProductBtnListener);
+
+        //проверка выбран ли сегодняшний день
+        if (!currentSelectedDate.equals(getCurrentDateString())){
+            addProductBtn.setEnabled(false);
+            addProductBtn.setAlpha((float) 0.5);
+        }
     }
 
 
@@ -96,7 +104,7 @@ public class DietActivity extends AppCompatActivity {
     //для перехода в активность с добавлением еды |start
     public void goToProductAdding() {
         Intent intent = new Intent(DietActivity.this, AddProductActivity.class);
-        intent.putExtra("date", currentDate);
+        intent.putExtra("date", currentSelectedDate);
         intent.putExtra("calorie_norm", calorie_norm);
         startActivity(intent);
         finish();
@@ -112,6 +120,20 @@ public class DietActivity extends AppCompatActivity {
         finish();
     }
     //system btn back (end)
+
+
+    //определить текущую дату | start
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public String getCurrentDateString(){
+        String currentDateStr = "";
+        LocalDate currentDate = LocalDate.now();
+        int currentDay = currentDate.getDayOfMonth();
+        int currentYear= currentDate.getYear();
+        Month currentMonth = currentDate.getMonth();
+        currentDateStr = currentDay + " " + currentMonth + " " + currentYear;
+        return currentDateStr;
+    }
+    //определить текущую дату | end
 
 
 
