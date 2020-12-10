@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/nameView"
+            android:layout_width="250dp"
+            android:layout_height="21dp"
+            android:textSize="17dp"
+            android:text="Курица отварная Ряба"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="3dp"
+            />
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+
+           <TextView
+               android:id="@+id/proteins"
+               android:layout_width="50dp"
+               android:layout_height="wrap_content"
+               android:textSize="13dp"
+               android:layout_marginLeft="5dp"
+               android:text="Б: 100 "/>
+           <TextView
+               android:id="@+id/fats"
+               android:layout_width="50dp"
+               android:layout_height="wrap_content"
+               android:textSize="13dp"
+               android:layout_marginLeft="5dp"
+               android:text="Ж: 100 "/>
+           <TextView
+               android:id="@+id/carbo"
+               android:layout_width="50dp"
+               android:layout_height="wrap_content"
+               android:textSize="13dp"
+               android:layout_marginLeft="5dp"
+               android:text="У: 100 "/>
+       </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/caloriePerHundredView"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:textSize="17dp"
+        android:textAlignment="center"
+        android:layout_marginRight="15dp"
+        android:text="100 ккал."/>
+
+</LinearLayout>

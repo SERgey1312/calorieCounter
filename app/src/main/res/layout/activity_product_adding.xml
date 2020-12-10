@@ -30,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Выберите продукт из списка:"
+            android:textSize="15dp"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="9dp"/>
 

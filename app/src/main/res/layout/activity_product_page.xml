@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/back_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/productName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ProductName"
+            android:textSize="25dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="6dp"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:id="@+id/caloriePerHundred"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="На 100 г. - "
+            android:textSize="20dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
+            />
+        <TextView
+            android:id="@+id/proteins"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Белки - "
+            android:textSize="20dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
+            />
+        <TextView
+            android:id="@+id/fats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Жиры - "
+            android:textSize="20dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
+            />
+        <TextView
+            android:id="@+id/carbo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Углеводы - "
+            android:textSize="20dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
+            />
+
+        <EditText
+            android:id="@+id/editTextView"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="9dp"
+            android:textSize="23dp"
+            android:hint="Введите вес продукта, (в граммах)"/>
+
+        <Button
+            android:id="@+id/saveFood"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="#10A211"
+            android:text="сохранить"
+            android:theme="@style/Widget.AppCompat.Button.Colored"
+            android:enabled="false"
+            android:alpha="0.5"/>
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

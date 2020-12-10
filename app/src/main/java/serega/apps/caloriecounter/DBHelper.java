@@ -14,7 +14,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private SQLiteDatabase db ;
 
-    public static final int DATABASE_VERSION = 11 ;
+    public static final int DATABASE_VERSION = 12 ;
     public static final String DATABASE_NAME = "calorie_counter";
     public static final String USER_TABLE = "user_info";
     public static final String FOOD_TABLE = "food_table";

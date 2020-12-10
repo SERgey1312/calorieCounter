@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
@@ -15,11 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class CalendarActivity extends AppCompatActivity {
 
@@ -42,6 +41,12 @@ public class CalendarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("products");
+//        myRef.push().setValue(new Product("Молоко", "250", "10" , "2", "2"));
+//        myRef.push().setValue(new Product("Курица", "323", "13" , "5", "1"));
+//        myRef.push().setValue(new Product("Творог 3%", "143", "15" , "3", "0"));
 
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -168,6 +173,5 @@ public class CalendarActivity extends AppCompatActivity {
         finish();
     }
     //функция перехода в активити изменения данных | end
-
 
 }
