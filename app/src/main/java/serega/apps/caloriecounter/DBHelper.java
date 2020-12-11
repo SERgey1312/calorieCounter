@@ -12,9 +12,9 @@ import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    private SQLiteDatabase db ;
+    private SQLiteDatabase db = getWritableDatabase() ;
 
-    public static final int DATABASE_VERSION = 12 ;
+    public static final int DATABASE_VERSION = 13 ;
     public static final String DATABASE_NAME = "calorie_counter";
     public static final String USER_TABLE = "user_info";
     public static final String FOOD_TABLE = "food_table";
@@ -72,9 +72,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 FOOD_CARBO + " TEXT, " +
                 FOOD_WEIGHT  + " TEXT" + ")";
         db.execSQL(FOOD_STR);
-        insertFood(new Food("9 DECEMBER 2020", "ХЛЕБ Пшеничный печенный со свининой в томате Ряба", "250", "1", "3", "13", "80"));
-        insertFood(new Food("9 DECEMBER 2020", "САЛАТ", "400", "1", "3", "13", "100"));
-        insertFood(new Food("9 DECEMBER 2020", "ЛУК РЕБЧАТЫЙ УГУДЭ из Казахстана", "500", "1", "3", "13", "100"));
+        //insertFood(new Food("9 DECEMBER 2020", "ХЛЕБ Пшеничный печенный со свининой в томате Ряба", "250", "1", "3", "13", "80"));
+        //insertFood(new Food("9 DECEMBER 2020", "САЛАТ", "400", "1", "3", "13", "100"));
+        //insertFood(new Food("9 DECEMBER 2020", "ЛУК РЕБЧАТЫЙ УГУДЭ из Казахстана", "500", "1", "3", "13", "100"));
         //       insertUser(new User("serega", "18", "90", "188", "male", "hz", "25.46"));
     }
 
@@ -112,7 +112,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void insertFood(Food food) {
-        db = getWritableDatabase();
+        //db = getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(FOOD_DATE, food.getDate_str());
         cv.put(FOOD_NAME, food.getName());
@@ -135,7 +135,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public ArrayList<User> getUserInfo(){
         ArrayList<User> users = new ArrayList<>();
-        db = getReadableDatabase();
+        //db = getReadableDatabase();
         //String selection = USER_NAME + "= ?";
         //String[] selectionArgs = new String[] {};
 
