@@ -65,6 +65,23 @@ public class AddProductActivity  extends AppCompatActivity {
         adapter = new ProductAdapter(this, R.layout.list_products_from_fb, products);
         productList.setAdapter(adapter);
 
+        productList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Product product = products.get(position);
+                Intent intent = new Intent(AddProductActivity.this, ProductPageActivity.class);
+                intent.putExtra("date", currentDate);
+                intent.putExtra("calorie_norm", calorie_norm);
+                intent.putExtra("product_name", product.getName());
+                intent.putExtra("product_calorie_per_hundred", product.getCalories_per_hundred());
+                intent.putExtra("proteins", product.getProteins());
+                intent.putExtra("fats", product.getFats());
+                intent.putExtra("carbo", product.getCarbo());
+                startActivity(intent);
+                finish();
+            }
+        });
+
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -85,6 +102,7 @@ public class AddProductActivity  extends AppCompatActivity {
                     products.add(product);
 
                 }
+
                 adapter.notifyDataSetChanged();
 
             }
@@ -93,25 +111,6 @@ public class AddProductActivity  extends AppCompatActivity {
             public void onCancelled(DatabaseError error) {
             }
         });
-
-        productList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Product product = products.get(position);
-                Intent intent = new Intent(AddProductActivity.this, ProductPageActivity.class);
-                intent.putExtra("date", currentDate);
-                intent.putExtra("calorie_norm", calorie_norm);
-                intent.putExtra("product_name", product.getName());
-                intent.putExtra("product_calorie_per_hundred", product.getCalories_per_hundred());
-                intent.putExtra("proteins", product.getProteins());
-                intent.putExtra("fats", product.getFats());
-                intent.putExtra("carbo", product.getCarbo());
-                startActivity(intent);
-                finish();
-            }
-        });
-
-
         editTextView.addTextChangedListener(textWatcher);
     }
 
@@ -141,8 +140,42 @@ public class AddProductActivity  extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            textInEditText = editTextView.getText().toString();
-            adapter.getFilter().filter(charSequence);
+            textInEditText = editTextView.getText().toString().toUpperCase();
+            query.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    products.clear();
+                    for (DataSnapshot ds : dataSnapshot.getChildren()){
+                        String name = (String) ds.child("name").getValue();
+                        String calories_per_hundred = (String) ds.child("calories_per_hundred").getValue();
+                        String proteins = (String) ds.child("proteins").getValue();
+                        String fats = (String) ds.child("fats").getValue();
+                        String carbo = (String) ds.child("carbo").getValue();
+                        String id = ds.getKey();
+                        Product product = new Product();
+                        product.setId(id);
+                        product.setCalories_per_hundred(calories_per_hundred);
+                        product.setCarbo(carbo);
+                        product.setFats(fats);
+                        product.setProteins(proteins);
+                        product.setName(name);
+                        if (name.toUpperCase().startsWith(textInEditText) && textInEditText.length() > 0){
+                            products.add(product);
+                        }
+
+                    }
+
+                    adapter.notifyDataSetChanged();
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                }
+            });
+           // System.out.println(charSequence);
+            //adapter.getFilter().filter(charSequence);
+
         }
 
         @Override

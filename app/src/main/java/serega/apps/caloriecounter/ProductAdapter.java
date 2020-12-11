@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class ProductAdapter extends ArrayAdapter<Product> implements Filterable {
     private LayoutInflater inflater;
@@ -22,14 +23,13 @@ public class ProductAdapter extends ArrayAdapter<Product> implements Filterable 
     private ArrayList<Product> tempProductList;
     private ArrayList<Product> originalArray;
     private ArrayList<Product> finalOriginArr;
-    CustomFilter cs;
+//    CustomFilter cs;
 
 
     ProductAdapter(Context context, int resource, ArrayList<Product> products) {
         super(context, resource, products);
         this.tempProductList = products;
-        this.originalArray = products;
-        this.finalOriginArr = products;
+        originalArray = new ArrayList<>(products);
         this.layout = resource;
         this.inflater = LayoutInflater.from(context);
 
@@ -67,49 +67,39 @@ public class ProductAdapter extends ArrayAdapter<Product> implements Filterable 
         }
     }
 
-    @NonNull
-    @Override
-    public Filter getFilter() {
-        if (cs == null){
-            cs = new CustomFilter();
-        }
-        return cs;
-    }
-
-    class CustomFilter extends Filter {
-
-        @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
-            FilterResults results = new FilterResults();
-
-            if (charSequence.length() > 0) {
-                ArrayList<Product> filteredProducts = new ArrayList<>();
-                charSequence = charSequence.toString().toUpperCase();
-                for (int i = 0; i < tempProductList.size(); i++){
-                    if(tempProductList.get(i).getName().toUpperCase().contains(charSequence)){
-                        Product product = new Product(tempProductList.get(i).getName(),
-                                tempProductList.get(i).getCalories_per_hundred(),
-                                tempProductList.get(i).getProteins(),
-                                tempProductList.get(i).getFats(),
-                                tempProductList.get(i).getCarbo());
-                        filteredProducts.add(product);
-                    }
-                }
-                results.count = filteredProducts.size();
-                results.values = filteredProducts;
-            } else {
-                results.count = tempProductList.size();
-                results.values = tempProductList;
-            }
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                originalArray.clear();
-                originalArray.addAll((Collection<? extends Product>) filterResults.values);
-                notifyDataSetChanged();
-        }
-    }
+//    @NonNull
+//    @Override
+//    public Filter getFilter() {
+//        if (cs == null){
+//            cs = new CustomFilter();
+//        }
+//        return cs;
+//    }
+//
+//    class CustomFilter extends Filter {
+//
+//        @Override
+//        protected FilterResults performFiltering(CharSequence charSequence) {
+//            List<Product> filtereList = new ArrayList<>();
+//            String pattr = charSequence.toString().toUpperCase().trim();
+//            if (pattr.length() > 0) {
+//                for (Product p : tempProductList){
+//                    if(p.getName().toUpperCase().contains(pattr)){
+//                        filtereList.add(p);
+//                    }
+//                }
+//            }
+//
+//            FilterResults results = new FilterResults();
+//            results.values = filtereList;
+//            return results;
+//        }
+//
+//        @Override
+//        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+//                tempProductList.clear();
+//                tempProductList.addAll((List) filterResults.values);
+//                notifyDataSetChanged();
+//        }
+//    }
 }
