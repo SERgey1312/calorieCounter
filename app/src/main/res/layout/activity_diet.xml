@@ -36,6 +36,16 @@
             android:textSize="20dp"
             android:layout_marginLeft="10dp"
             />
+        <TextView
+            android:id="@+id/tips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Норма достигнута, старайтесь есть поменьше!"
+            android:textSize="20dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#ff1919"
+            android:alpha="0"
+            />
 
         <Button
             android:id="@+id/addProductBtn"

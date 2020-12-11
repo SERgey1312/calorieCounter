@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    private SQLiteDatabase db = getWritableDatabase() ;
+    private SQLiteDatabase db;
 
     public static final int DATABASE_VERSION = 13 ;
     public static final String DATABASE_NAME = "calorie_counter";
@@ -86,18 +86,22 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void clearUserTable(){
+        db = getWritableDatabase();
         db.execSQL("DELETE FROM " + USER_TABLE);
     }
 
-    public void clearFoodTable(){
+    public void clearFoodTable() {
+        db = getWritableDatabase();
         db.execSQL("DELETE FROM " + FOOD_TABLE);
     }
 
     public void deleteOneProduct(String date, String name, String weight){
+        db = getWritableDatabase();
         db.execSQL("DELETE FROM " + FOOD_TABLE + " WHERE " + FOOD_DATE + " = " +  "\"" + date +  "\"" + " AND " + FOOD_NAME + " = " + "\"" +name +  "\"" + " AND " + FOOD_WEIGHT + " = " + "\"" + weight + "\"");
     }
 
     public void insertUser(User user) {
+        db = getWritableDatabase();
         ContentValues cv = new ContentValues();
         String w_index = getWeightIndex(user.getHeight(), user.getWeight());
         cv.put(USER_NAME, user.getName());
@@ -112,7 +116,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void insertFood(Food food) {
-        //db = getWritableDatabase();
+        db = getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(FOOD_DATE, food.getDate_str());
         cv.put(FOOD_NAME, food.getName());
@@ -134,6 +138,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<User> getUserInfo(){
+        db = getReadableDatabase();
         ArrayList<User> users = new ArrayList<>();
         //db = getReadableDatabase();
         //String selection = USER_NAME + "= ?";
@@ -163,6 +168,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Food> getFoodByDate(String date){
+
         ArrayList<Food> products = new ArrayList<>();
         db = getReadableDatabase();
         String selection = FOOD_DATE + "= ?";

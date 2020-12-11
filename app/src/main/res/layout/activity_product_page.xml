@@ -75,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_margin="9dp"
-            android:textSize="23dp"
+            android:textSize="18dp"
             android:hint="Введите вес продукта, (в граммах)"/>
 
         <Button

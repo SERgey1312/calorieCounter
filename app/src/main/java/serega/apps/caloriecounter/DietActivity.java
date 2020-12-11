@@ -1,6 +1,7 @@
 package serega.apps.caloriecounter;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DietActivity extends AppCompatActivity {
@@ -31,11 +33,13 @@ public class DietActivity extends AppCompatActivity {
 
     TextView dateTittle;
     TextView calories;
+    TextView tips;
     ListView productList;
     Button addProductBtn;
 
     String currentSelectedDate;
     String calorie_norm;
+    String currentCalorie;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -55,13 +59,18 @@ public class DietActivity extends AppCompatActivity {
         dateTittle.setText(currentSelectedDate);
         calories = findViewById(R.id.calories);
         addProductBtn = findViewById(R.id.addProductBtn);
+        tips = findViewById(R.id.tips);
 
         products = dbHelper.getFoodByDate(currentSelectedDate);
         productList = findViewById(R.id.productList);
         FoodAdapter adapter = new FoodAdapter(this, R.layout.list_products, products, dbHelper, currentSelectedDate, calorie_norm);
         productList.setAdapter(adapter);
+        currentCalorie = getCalorieProgress(products);
 
-        String caloriesTittle = calories.getText().toString() + getCalorieProgress(products) + " / " + calorie_norm + " ккал.";
+        String caloriesTittle = calories.getText().toString() + currentCalorie + " / " + calorie_norm + " ккал.";
+        if(Double.valueOf(currentCalorie) > Double.valueOf(calorie_norm)){
+            tips.setAlpha((float) 0.5);
+        }
         calories.setText(caloriesTittle);
 
         View.OnClickListener addProductBtnListener = new View.OnClickListener() {
@@ -126,11 +135,11 @@ public class DietActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String getCurrentDateString(){
         String currentDateStr = "";
-        LocalDate currentDate = LocalDate.now();
-        int currentDay = currentDate.getDayOfMonth();
-        int currentYear= currentDate.getYear();
-        Month currentMonth = currentDate.getMonth();
-        currentDateStr = currentDay + " " + currentMonth + " " + currentYear;
+        Date currentDate = new Date();
+        int currentDay = currentDate.getDate();
+        int currentYear= Calendar.getInstance().get(Calendar.YEAR);
+        int currentMonth = currentDate.getMonth() + 1;
+        currentDateStr = currentDay + ". " + currentMonth + ". " + currentYear;
         return currentDateStr;
     }
     //определить текущую дату | end

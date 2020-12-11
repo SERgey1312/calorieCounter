@@ -19,6 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Calendar;
+import java.util.Date;
 
 public class CalendarActivity extends AppCompatActivity {
 
@@ -34,7 +36,7 @@ public class CalendarActivity extends AppCompatActivity {
     Button openDay;
 
     String selectedDate;
-
+    Date currentDate;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -94,15 +96,14 @@ public class CalendarActivity extends AppCompatActivity {
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
-                Month month1 = Month.of(month + 1);
-                selectedDate = day + " " + month1 + " " + year;
+                selectedDate = day + ". " + (month+1) + ". " + year;
             }
         });
-        LocalDate currentDate = LocalDate.now();
-        int currentDay = currentDate.getDayOfMonth();
-        int currentYear= currentDate.getYear();
-        Month currentMonth = currentDate.getMonth();
-        selectedDate = currentDay + " " + currentMonth + " " + currentYear;
+        currentDate = new Date();
+        int currentDay = currentDate.getDate();
+        int currentYear= Calendar.getInstance().get(Calendar.YEAR);
+        int currentMonth = currentDate.getMonth() + 1;
+        selectedDate = currentDay + ". " + currentMonth + ". " + currentYear;
 
 
         // слушатель для переключения даты в календаре | end

@@ -74,7 +74,7 @@ public class ProductPageActivity  extends AppCompatActivity {
         editTextView = findViewById(R.id.editTextView);
         saveFood = findViewById(R.id.saveFood);
 
-        String strCaloriePerHundredView = caloriePerHundredView.getText().toString() + product_calorie_per_hundred + "ккал.";
+        String strCaloriePerHundredView = caloriePerHundredView.getText().toString() + product_calorie_per_hundred + " ккал.";
         String strProteinsView = proteinsView.getText().toString() + proteins + " г.";
         String strFatsView = fatsView.getText().toString() + fats + " г.";
         String strCarboView = carboView.getText().toString() + carbo + " г.";

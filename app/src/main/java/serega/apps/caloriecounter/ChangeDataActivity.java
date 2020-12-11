@@ -156,4 +156,13 @@ public class ChangeDataActivity extends AppCompatActivity {
         }
     };
     // для проверки введены ли данные так, как нужно | end
+
+    //system btn back
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(ChangeDataActivity.this, CalendarActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    //system btn back (end)
 }
