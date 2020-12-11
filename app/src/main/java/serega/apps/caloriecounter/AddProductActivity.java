@@ -61,7 +61,7 @@ public class AddProductActivity  extends AppCompatActivity {
         productList.setTextFilterEnabled(true);
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("products");
-        query = FirebaseDatabase.getInstance().getReference("products").orderByChild("name");
+        query = FirebaseDatabase.getInstance().getReference().orderByChild("name");
         adapter = new ProductAdapter(this, R.layout.list_products_from_fb, products);
         productList.setAdapter(adapter);
 
